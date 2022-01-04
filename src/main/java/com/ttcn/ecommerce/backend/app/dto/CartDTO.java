@@ -1,29 +1,29 @@
-package com.ttcn.ecommerce.backend.app.entity;
+package com.ttcn.ecommerce.backend.app.dto;
 
+
+import com.ttcn.ecommerce.backend.app.entity.BaseEntity;
+import com.ttcn.ecommerce.backend.app.entity.CartItem;
+import com.ttcn.ecommerce.backend.app.entity.Customer;
+import com.ttcn.ecommerce.backend.app.validation.ValidUsername;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "cart")
-public class Cart extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+public class CartDTO extends AbstractDTO {
+
     private Customer customer;
 
-    @Column(name = "note")
     private String note;
 
-    @Column(name = "total_cost")
     private BigDecimal total_cost;
 
-    @Column(name = "address")
+    @ValidUsername
+    @NotNull(message = "is required")
     private String address;
 
-    @OneToMany(mappedBy = "cart", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public List<CartItem> getCartItems() {

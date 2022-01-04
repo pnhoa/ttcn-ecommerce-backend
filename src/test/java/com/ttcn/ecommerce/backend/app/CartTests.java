@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
+import java.math.BigDecimal;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
@@ -29,7 +31,7 @@ public class CartTests {
         cart.setCustomer(customer);
         cart.setAddress("Sdawdsadw");
         cart.setNote("sdadsadad");
-        cart.setTotal_cost(1023);
+        cart.setTotal_cost(new BigDecimal(1023));
         cart.setCreatedBy("SDSad");
         cart.setModefiedBy("sadasd");
         Cart savedCart = cartRepo.save(cart);

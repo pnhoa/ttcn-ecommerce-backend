@@ -1,25 +1,20 @@
-package com.ttcn.ecommerce.backend.app.entity;
+package com.ttcn.ecommerce.backend.app.dto;
 
+
+import com.ttcn.ecommerce.backend.app.entity.BaseEntity;
+import com.ttcn.ecommerce.backend.app.entity.Cart;
+import com.ttcn.ecommerce.backend.app.entity.Product;
 
 import javax.persistence.*;
-import java.sql.Date;
 
-@Entity
-@Table(name = "cart_item")
-public class CartItem extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id")
+public class CartItemDTO extends AbstractDTO {
     private Cart cart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
     private Product product;
 
 
-    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "status")
     private int status;
 
 
