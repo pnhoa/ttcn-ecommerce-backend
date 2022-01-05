@@ -3,7 +3,6 @@ package com.ttcn.ecommerce.backend.app.service;
 import com.ttcn.ecommerce.backend.app.dto.CartDTO;
 import com.ttcn.ecommerce.backend.app.dto.MessageResponse;
 import com.ttcn.ecommerce.backend.app.entity.Cart;
-import com.ttcn.ecommerce.backend.app.entity.CartItem;
 import com.ttcn.ecommerce.backend.app.exception.ResourceNotFoundException;
 import com.ttcn.ecommerce.backend.app.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +38,7 @@ public class CartService implements ICartService{
     public Cart findById(Long theId) {
 
         return cartRepo
-                .findById(theId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+                .findById(theId).orElseThrow(() -> new ResourceNotFoundException("can't find cart with ID=" + theId));
     }
 
 
@@ -52,7 +50,7 @@ public class CartService implements ICartService{
     @Override
     public MessageResponse createCart(CartDTO cartDTO) {
         Cart cart = new Cart();
-        cart.setTotal_cost(cartDTO.getTotal_cost());
+        cart.setTotalCost(cartDTO.getTotalCost());
         cart.setNote(cartDTO.getNote());
         cart.setCustomer(cartDTO.getCustomer());
         cart.setAddress(cartDTO.getAddress());
@@ -73,7 +71,7 @@ public class CartService implements ICartService{
         if(!cart.isPresent()) {
             throw new ResourceNotFoundException("Can't find Cart with ID=" + theId);
         } else {
-            cart.get().setTotal_cost(cartDTO.getTotal_cost());
+            cart.get().setTotalCost(cartDTO.getTotalCost());
             cart.get().setNote(cartDTO.getNote());
             cart.get().setCustomer(cartDTO.getCustomer());
             cart.get().setAddress(cartDTO.getAddress());

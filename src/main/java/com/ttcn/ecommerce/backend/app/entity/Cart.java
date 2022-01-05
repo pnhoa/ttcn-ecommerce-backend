@@ -1,16 +1,17 @@
 package com.ttcn.ecommerce.backend.app.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "cart")
 public class Cart extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -18,12 +19,13 @@ public class Cart extends BaseEntity{
     private String note;
 
     @Column(name = "total_cost")
-    private BigDecimal total_cost;
+    private BigDecimal totalCost;
 
     @Column(name = "address")
     private String address;
 
     @OneToMany(mappedBy = "cart", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"cart"})
     private List<CartItem> cartItems = new ArrayList<>();
 
     public List<CartItem> getCartItems() {
@@ -51,12 +53,12 @@ public class Cart extends BaseEntity{
         this.note = note;
     }
 
-    public BigDecimal getTotal_cost() {
-        return total_cost;
+    public BigDecimal getTotalCost() {
+        return totalCost;
     }
 
-    public void setTotal_cost(BigDecimal total_cost) {
-        this.total_cost = total_cost;
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
     }
 
     public String getAddress() {

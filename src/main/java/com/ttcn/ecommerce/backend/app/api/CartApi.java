@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/carts")
+@RequestMapping("/api/cart")
 public class CartApi {
 
     @Autowired
@@ -36,9 +35,10 @@ public class CartApi {
     }
 
     @GetMapping(value = { "/{cid}" })
-    public ResponseEntity<Cart> getCart(@PathVariable("id") long id) {
+    public ResponseEntity<Cart> getCart(@PathVariable("cid") long id) {
         Cart cart = cartService.findById(id);
         return new ResponseEntity<>(cart, HttpStatus.OK);
+
     }
 
     @PostMapping("")

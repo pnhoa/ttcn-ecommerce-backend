@@ -1,12 +1,10 @@
 package com.ttcn.ecommerce.backend.app.dto;
 
 
-import com.ttcn.ecommerce.backend.app.entity.BaseEntity;
 import com.ttcn.ecommerce.backend.app.entity.CartItem;
 import com.ttcn.ecommerce.backend.app.entity.Customer;
 import com.ttcn.ecommerce.backend.app.validation.ValidUsername;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,7 +16,15 @@ public class CartDTO extends AbstractDTO {
 
     private String note;
 
-    private BigDecimal total_cost;
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    private BigDecimal totalCost;
 
     @ValidUsername
     @NotNull(message = "is required")
@@ -51,13 +57,7 @@ public class CartDTO extends AbstractDTO {
         this.note = note;
     }
 
-    public BigDecimal getTotal_cost() {
-        return total_cost;
-    }
 
-    public void setTotal_cost(BigDecimal total_cost) {
-        this.total_cost = total_cost;
-    }
 
     public String getAddress() {
         return address;

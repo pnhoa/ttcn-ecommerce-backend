@@ -8,7 +8,7 @@ import com.ttcn.ecommerce.backend.app.entity.Product;
 import javax.persistence.*;
 
 public class CartItemDTO extends AbstractDTO {
-    private Cart cart;
+    private long cartId;
 
     private Product product;
 
@@ -18,12 +18,12 @@ public class CartItemDTO extends AbstractDTO {
     private int status;
 
 
-    public Cart getCart() {
-        return cart;
+    public long getCartId() {
+        return cartId;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setCartId(long cartId) {
+        this.cartId = cartId;
     }
 
     public Product getProduct() {

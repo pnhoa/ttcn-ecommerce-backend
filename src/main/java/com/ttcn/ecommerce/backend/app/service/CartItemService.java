@@ -5,6 +5,7 @@ import com.ttcn.ecommerce.backend.app.dto.MessageResponse;
 import com.ttcn.ecommerce.backend.app.entity.CartItem;
 import com.ttcn.ecommerce.backend.app.exception.ResourceNotFoundException;
 import com.ttcn.ecommerce.backend.app.repository.CartItemRepository;
+import com.ttcn.ecommerce.backend.app.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ public class CartItemService implements ICartItemService{
     @Autowired
     private CartItemRepository cartItemRepo;
 
+    @Autowired
+    private CartRepository cartRepo;
+
     @Override
     public List<CartItem> findAll() {
         return cartItemRepo.findAll();
@@ -35,8 +39,7 @@ public class CartItemService implements ICartItemService{
 
     @Override
     public CartItem findById(Long theId) {
-        return  cartItemRepo.findById(theId)
-                .orElseThrow(() -> new ResourceNotFoundException("CartItem not found"));
+        return  cartItemRepo.findById(theId).orElseThrow(() -> new ResourceNotFoundException("can't find cart with ID=" + theId));
     }
 
     @Override
@@ -47,7 +50,7 @@ public class CartItemService implements ICartItemService{
     @Override
     public MessageResponse createCartItem(CartItemDTO cartItemDTO) {
         CartItem cartItem = new CartItem();
-        cartItem.setCart(cartItemDTO.getCart());
+        cartItem.setCart(cartRepo.findById(cartItemDTO.getCartId()).get());
         cartItem.setProduct(cartItemDTO.getProduct());
         cartItem.setQuantity(cartItemDTO.getQuantity());
         cartItem.setStatus(cartItemDTO.getStatus());
@@ -67,7 +70,7 @@ public class CartItemService implements ICartItemService{
         if(!cartItem.isPresent()) {
             throw new ResourceNotFoundException("Can't find cartItem with ID=" + theId);
         } else {
-            cartItem.get().setCart(cartItemDTO.getCart());
+            cartItem.get().setCart(cartRepo.findById(cartItemDTO.getCartId()).get());
             cartItem.get().setProduct(cartItemDTO.getProduct());
             cartItem.get().setQuantity(cartItemDTO.getQuantity());
             cartItem.get().setStatus(cartItemDTO.getStatus());

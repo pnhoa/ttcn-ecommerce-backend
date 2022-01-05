@@ -21,7 +21,7 @@ public class CategoryAPI {
 
     @GetMapping("")
     public ResponseEntity<List<Category>> getAll(){
-
+        System.out.println(" getALl from categories ");
         List<Category> categories = categoryService.findAll();
 
         return new ResponseEntity<>(categories, HttpStatus.OK);

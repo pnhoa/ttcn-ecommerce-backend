@@ -1,18 +1,22 @@
 package com.ttcn.ecommerce.backend.app.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "cart_item")
 public class CartItem extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")
+    @JsonIgnoreProperties({"cart"})
     private Cart cart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
+    @JsonIgnoreProperties({"product"})
     private Product product;
 
 

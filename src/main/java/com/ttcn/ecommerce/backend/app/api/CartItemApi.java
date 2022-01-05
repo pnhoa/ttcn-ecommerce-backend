@@ -23,6 +23,8 @@ public class CartItemApi {
 
     @GetMapping(value = { "", "/" })
     public ResponseEntity<List<CartItem>> findAll() {
+
+        System.out.println(" getALl from cartItem ");
         List<CartItem> listOfCartItem = cartItemService.findAll() ;
 
         if(listOfCartItem == null || listOfCartItem.isEmpty() )
@@ -32,7 +34,7 @@ public class CartItemApi {
     }
 
     @GetMapping(value = { "/{cid}" })
-    public ResponseEntity<CartItem> getCartItem(@PathVariable("id") long id) {
+    public ResponseEntity<CartItem> getCartItem(@PathVariable("cid") long id) {
         CartItem cartItem = cartItemService.findById(id);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
