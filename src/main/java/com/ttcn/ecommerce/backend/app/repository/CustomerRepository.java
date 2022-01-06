@@ -20,4 +20,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("SELECT c FROM Customer c WHERE lower(c.userName) LIKE %?1%"
             + " OR lower(c.name) LIKE %?1% OR lower(c.email) LIKE %?1% OR lower(c.phoneNumber) LIKE %?1%" )
     List<Customer> search(String key);
+
 }

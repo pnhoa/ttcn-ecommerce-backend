@@ -3,8 +3,10 @@ package com.ttcn.ecommerce.backend.app.service;
 import com.ttcn.ecommerce.backend.app.dto.CartDTO;
 import com.ttcn.ecommerce.backend.app.dto.MessageResponse;
 import com.ttcn.ecommerce.backend.app.entity.Cart;
+import com.ttcn.ecommerce.backend.app.entity.Customer;
 import com.ttcn.ecommerce.backend.app.exception.ResourceNotFoundException;
 import com.ttcn.ecommerce.backend.app.repository.CartRepository;
+import com.ttcn.ecommerce.backend.app.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +24,8 @@ import java.util.Optional;
 public class CartService implements ICartService{
     @Autowired
     private CartRepository cartRepo;
-
+    @Autowired
+    private CustomerRepository customerRepo;
 
     @Override
     public List<Cart> findAll() {
@@ -52,7 +55,7 @@ public class CartService implements ICartService{
         Cart cart = new Cart();
         cart.setTotalCost(cartDTO.getTotalCost());
         cart.setNote(cartDTO.getNote());
-        cart.setCustomer(cartDTO.getCustomer());
+        cart.setCustomer(customerRepo.getById(cartDTO.getCustomerId()));
         cart.setAddress(cartDTO.getAddress());
         cart.setCartItems(cartDTO.getCartItems());
         cart.setCreatedBy("");
@@ -73,7 +76,7 @@ public class CartService implements ICartService{
         } else {
             cart.get().setTotalCost(cartDTO.getTotalCost());
             cart.get().setNote(cartDTO.getNote());
-            cart.get().setCustomer(cartDTO.getCustomer());
+            cart.get().setCustomer(customerRepo.getById(cartDTO.getCustomerId()));
             cart.get().setAddress(cartDTO.getAddress());
             cart.get().setCartItems(cartDTO.getCartItems());
             cart.get().setCreatedBy(cartDTO.getCreatedBy());
@@ -93,4 +96,6 @@ public class CartService implements ICartService{
 
         cartRepo.delete(cart);
     }
+
+
 }

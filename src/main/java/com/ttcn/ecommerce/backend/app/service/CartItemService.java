@@ -6,6 +6,7 @@ import com.ttcn.ecommerce.backend.app.entity.CartItem;
 import com.ttcn.ecommerce.backend.app.exception.ResourceNotFoundException;
 import com.ttcn.ecommerce.backend.app.repository.CartItemRepository;
 import com.ttcn.ecommerce.backend.app.repository.CartRepository;
+import com.ttcn.ecommerce.backend.app.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,8 @@ import java.util.Optional;
 public class CartItemService implements ICartItemService{
     @Autowired
     private CartItemRepository cartItemRepo;
+    @Autowired
+    private ProductRepository productRepo;
 
     @Autowired
     private CartRepository cartRepo;
@@ -51,7 +54,7 @@ public class CartItemService implements ICartItemService{
     public MessageResponse createCartItem(CartItemDTO cartItemDTO) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cartRepo.findById(cartItemDTO.getCartId()).get());
-        cartItem.setProduct(cartItemDTO.getProduct());
+        cartItem.setProduct(productRepo.findById(cartItemDTO.getProductId()).get());
         cartItem.setQuantity(cartItemDTO.getQuantity());
         cartItem.setStatus(cartItemDTO.getStatus());
         cartItem.setCreatedBy("");
@@ -71,7 +74,7 @@ public class CartItemService implements ICartItemService{
             throw new ResourceNotFoundException("Can't find cartItem with ID=" + theId);
         } else {
             cartItem.get().setCart(cartRepo.findById(cartItemDTO.getCartId()).get());
-            cartItem.get().setProduct(cartItemDTO.getProduct());
+            cartItem.get().setProduct(productRepo.findById(cartItemDTO.getProductId()).get());
             cartItem.get().setQuantity(cartItemDTO.getQuantity());
             cartItem.get().setStatus(cartItemDTO.getStatus());
             cartItem.get().setCreatedBy(cartItemDTO.getCreatedBy());

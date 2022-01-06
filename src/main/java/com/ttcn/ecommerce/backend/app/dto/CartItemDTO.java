@@ -10,13 +10,11 @@ import javax.persistence.*;
 public class CartItemDTO extends AbstractDTO {
     private long cartId;
 
-    private Product product;
-
+    private long productId;
 
     private int quantity;
 
     private int status;
-
 
     public long getCartId() {
         return cartId;
@@ -26,14 +24,13 @@ public class CartItemDTO extends AbstractDTO {
         this.cartId = cartId;
     }
 
-    public Product getProduct() {
-        return product;
+    public long getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
-
 
     public int getQuantity() {
         return quantity;

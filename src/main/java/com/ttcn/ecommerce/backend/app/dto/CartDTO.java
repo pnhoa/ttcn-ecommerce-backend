@@ -12,21 +12,12 @@ import java.util.List;
 
 public class CartDTO extends AbstractDTO {
 
-    private Customer customer;
+    private long customerId;
 
     private String note;
 
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
-    }
-
     private BigDecimal totalCost;
 
-    @ValidUsername
     @NotNull(message = "is required")
     private String address;
 
@@ -40,15 +31,22 @@ public class CartDTO extends AbstractDTO {
         this.cartItems = cartItems;
     }
 
-    public Customer getCustomer() {
-        return customer;
+
+    public long getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
 
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
     public String getNote() {
         return note;
     }
@@ -56,8 +54,6 @@ public class CartDTO extends AbstractDTO {
     public void setNote(String note) {
         this.note = note;
     }
-
-
 
     public String getAddress() {
         return address;

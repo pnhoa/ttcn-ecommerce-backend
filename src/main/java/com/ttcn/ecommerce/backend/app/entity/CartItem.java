@@ -11,7 +11,7 @@ import java.sql.Date;
 public class CartItem extends BaseEntity{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")
-    @JsonIgnoreProperties({"cart"})
+    @JsonIgnoreProperties({"cartItems"})
     private Cart cart;
 
     @ManyToOne(fetch = FetchType.EAGER)
