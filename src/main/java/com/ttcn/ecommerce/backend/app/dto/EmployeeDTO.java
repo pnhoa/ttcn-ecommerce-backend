@@ -1,55 +1,48 @@
-package com.ttcn.ecommerce.backend.app.entity;
+package com.ttcn.ecommerce.backend.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ttcn.ecommerce.backend.app.utils.Provider;
+import com.ttcn.ecommerce.backend.app.entity.Role;
+import com.ttcn.ecommerce.backend.app.validation.ValidEmail;
+import com.ttcn.ecommerce.backend.app.validation.ValidPhoneNumber;
+import com.ttcn.ecommerce.backend.app.validation.ValidUsername;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@Entity
-@Table(name = "customer")
-@JsonIgnoreProperties({"role", "feedbacks", "password"})
-public class Customer extends BaseEntity{
+@JsonIgnoreProperties({"roles", "roleCode" })
+public class EmployeeDTO extends AbstractDTO{
 
-    @Column(name = "username", unique = true, nullable = false)
+    @ValidUsername
+    @NotNull(message = "is required")
     private String userName;
 
-    @Column(name = "password", nullable = false)
+    @NotNull(message = "is required")
     private String password;
 
-    @Column(name = "name")
+    @NotNull(message = "is required")
     private String name;
 
-    @Column(name = "address")
     private String address;
 
-    @Column(name = "phone_number", unique = true)
+    @NotNull(message = "is required")
+    @ValidPhoneNumber
     private String phoneNumber;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @ValidEmail
+    @NotNull(message = "is required")
     private String email;
 
-    @Column(name = "gender")
     private int gender;
 
-    @Column(name = "profilePicture")
     private String profilePicture;
 
-    @Column(name = "enabled", columnDefinition = "default 1")
     private int enabled;
 
-    @Enumerated(EnumType.STRING)
-    private Provider provider;
+    private Set<Role> roles;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    private String roleCode;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("customer")
-    Set<Feedback> feedbacks;
-
-    public Customer() {
+    public EmployeeDTO() {
     }
 
     public String getUserName() {
@@ -58,14 +51,6 @@ public class Customer extends BaseEntity{
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -124,27 +109,27 @@ public class Customer extends BaseEntity{
         this.enabled = enabled;
     }
 
-    public Provider getProvider() {
-        return provider;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setProvider(Provider provider) {
-        this.provider = provider;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public Role getRole() {
-        return role;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
-    public Set<Feedback> getFeedbacks() {
-        return feedbacks;
+    public String getPassword() {
+        return password;
     }
 
-    public void setFeedbacks(Set<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
