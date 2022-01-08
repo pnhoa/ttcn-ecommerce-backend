@@ -52,7 +52,13 @@ public class CartItemService implements ICartItemService{
 
     @Override
     public MessageResponse createCartItem(CartItemDTO cartItemDTO) {
+
         CartItem cartItem = new CartItem();
+        try{
+            cartItem.setCart(cartRepo.findById(cartItemDTO.getCartId()).get());
+        }catch(java.util.NoSuchElementException e){
+            return new MessageResponse("Missing CartId!", HttpStatus.NOT_FOUND, LocalDateTime.now());
+        }
         cartItem.setCart(cartRepo.findById(cartItemDTO.getCartId()).get());
         cartItem.setProduct(productRepo.findById(cartItemDTO.getProductId()).get());
         cartItem.setQuantity(cartItemDTO.getQuantity());

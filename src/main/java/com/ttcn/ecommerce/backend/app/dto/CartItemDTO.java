@@ -2,13 +2,14 @@ package com.ttcn.ecommerce.backend.app.dto;
 
 
 public class CartItemDTO extends AbstractDTO {
+
+
+
     private long cartId;
-
     private long productId;
-
     private int quantity;
-
     private int status;
+
 
     public long getCartId() {
         return cartId;

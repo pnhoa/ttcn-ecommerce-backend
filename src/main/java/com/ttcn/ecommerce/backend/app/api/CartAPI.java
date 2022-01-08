@@ -31,6 +31,7 @@ public class CartAPI {
                                               @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int limit,
                                                @RequestParam(defaultValue = "id,ASC") String[] sort){
+
         try {
             Pageable pagingSort = CommonUtils.sortItem(page, limit, sort);
             Page<Cart> cartPage = null;
@@ -75,7 +76,7 @@ public class CartAPI {
     }
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateCart(@PathVariable("id") long theId,
-                                                      @Valid @RequestBody CartDTO cartDto, BindingResult bindingResult){
+                                                         @Valid @RequestBody CartDTO cartDto, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>(new MessageResponse("Invalid value for update product", HttpStatus.BAD_REQUEST, LocalDateTime.now()), HttpStatus.BAD_REQUEST);

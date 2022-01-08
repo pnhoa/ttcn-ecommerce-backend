@@ -79,7 +79,7 @@ public class CartItemAPI {
     }
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateCartItem(@PathVariable("id") long theId,
-                                                          @Valid @RequestBody CartItemDTO cartItemDto, BindingResult bindingResult){
+                                                      @Valid @RequestBody CartItemDTO cartItemDto, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>(new MessageResponse("Invalid param for modifying cart item", HttpStatus.BAD_REQUEST, LocalDateTime.now()), HttpStatus.BAD_REQUEST);
