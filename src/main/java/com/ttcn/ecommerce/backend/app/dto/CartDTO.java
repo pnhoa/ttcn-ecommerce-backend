@@ -1,6 +1,8 @@
 package com.ttcn.ecommerce.backend.app.dto;
 
 
+import com.ttcn.ecommerce.backend.app.entity.CartItem;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
