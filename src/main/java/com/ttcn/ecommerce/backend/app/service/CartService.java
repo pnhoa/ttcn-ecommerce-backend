@@ -3,8 +3,9 @@ package com.ttcn.ecommerce.backend.app.service;
 import com.ttcn.ecommerce.backend.app.dto.CartDTO;
 import com.ttcn.ecommerce.backend.app.dto.MessageResponse;
 import com.ttcn.ecommerce.backend.app.entity.Cart;
-import com.ttcn.ecommerce.backend.app.entity.Customer;
+import com.ttcn.ecommerce.backend.app.entity.CartItem;
 import com.ttcn.ecommerce.backend.app.exception.ResourceNotFoundException;
+import com.ttcn.ecommerce.backend.app.repository.CartItemRepository;
 import com.ttcn.ecommerce.backend.app.repository.CartRepository;
 import com.ttcn.ecommerce.backend.app.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,8 @@ import java.util.Optional;
 public class CartService implements ICartService{
     @Autowired
     private CartRepository cartRepo;
+    @Autowired
+    private CartItemRepository cartItemRepo;
     @Autowired
     private CustomerRepository customerRepo;
 
@@ -57,10 +61,20 @@ public class CartService implements ICartService{
         cart.setNote(cartDTO.getNote());
         cart.setCustomer(customerRepo.getById(cartDTO.getCustomerId()));
         cart.setAddress(cartDTO.getAddress());
-        cart.setCartItems(cartDTO.getCartItems());
+
+        List<Long> cartItemIds = cartDTO.getCartItemIds();
+        List<CartItem> cartItems = new ArrayList<>();
+
+        for(Long cartItemId : cartItemIds){
+            Optional<CartItem> cartItemFound = cartItemRepo.findById(cartItemId);
+            if(cartItemFound.isPresent()){
+                cartItems.add(cartItemFound.get());
+            }
+        }
+        cart.setCartItems(cartItems);
         cart.setCreatedBy("");
         cart.setCreatedDate(new Date());
-        cart.setModefiedBy(cartDTO.getModifiedBy());
+        cart.setModifiedBy(cartDTO.getModifiedBy());
         cart.setModifiedDate(cartDTO.getCreatedDate());
 
         cartRepo.save(cart);
@@ -69,6 +83,7 @@ public class CartService implements ICartService{
 
     @Override
     public MessageResponse updateCart(Long theId, CartDTO cartDTO) {
+
         Optional<Cart> cart = cartRepo.findById(theId);
 
         if(!cart.isPresent()) {
@@ -78,12 +93,25 @@ public class CartService implements ICartService{
             cart.get().setNote(cartDTO.getNote());
             cart.get().setCustomer(customerRepo.getById(cartDTO.getCustomerId()));
             cart.get().setAddress(cartDTO.getAddress());
-            cart.get().setCartItems(cartDTO.getCartItems());
+
+            List<Long> cartItemIds = cartDTO.getCartItemIds();
+            List<CartItem> cartItems = new ArrayList<>();
+
+            for(Long cartItemId : cartItemIds){
+                Optional<CartItem> cartItemFound = cartItemRepo.findById(cartItemId);
+                if(cartItemFound.isPresent()){
+                    cartItems.add(cartItemFound.get());
+                }
+            }
+
+            cart.get().setCartItems(cartItems);
             cart.get().setCreatedBy(cartDTO.getCreatedBy());
             cart.get().setCreatedDate(cartDTO.getCreatedDate());
-            cart.get().setModefiedBy("");
+            cart.get().setModifiedBy("");
             cart.get().setModifiedDate(new Date());
-            cartRepo.save(cart.get());
+
+            Cart savedCart = cartRepo.save(cart.get());
+
         }
 
         return new MessageResponse("Update cart successfully!" , HttpStatus.OK, LocalDateTime.now());

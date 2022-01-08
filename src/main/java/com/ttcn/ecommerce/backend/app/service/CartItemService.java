@@ -59,7 +59,7 @@ public class CartItemService implements ICartItemService{
         cartItem.setStatus(cartItemDTO.getStatus());
         cartItem.setCreatedBy("");
         cartItem.setCreatedDate(new Date());
-        cartItem.setModefiedBy(cartItemDTO.getModifiedBy());
+        cartItem.setModifiedBy(cartItemDTO.getModifiedBy());
         cartItem.setModifiedDate(cartItemDTO.getCreatedDate());
 
         cartItemRepo.save(cartItem);
@@ -79,7 +79,7 @@ public class CartItemService implements ICartItemService{
             cartItem.get().setStatus(cartItemDTO.getStatus());
             cartItem.get().setCreatedBy(cartItemDTO.getCreatedBy());
             cartItem.get().setCreatedDate(cartItemDTO.getCreatedDate());
-            cartItem.get().setModefiedBy("");
+            cartItem.get().setModifiedBy("");
             cartItem.get().setModifiedDate(new Date());
             cartItemRepo.save(cartItem.get());
         }

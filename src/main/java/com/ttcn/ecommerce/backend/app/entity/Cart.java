@@ -33,7 +33,8 @@ public class Cart extends BaseEntity{
     }
 
     public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+        this.cartItems.clear();
+        this.cartItems.addAll(cartItems);
     }
 
     public Customer getCustomer() {

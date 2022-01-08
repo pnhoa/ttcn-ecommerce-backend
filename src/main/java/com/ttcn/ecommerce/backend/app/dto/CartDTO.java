@@ -1,10 +1,6 @@
 package com.ttcn.ecommerce.backend.app.dto;
 
 
-import com.ttcn.ecommerce.backend.app.entity.CartItem;
-import com.ttcn.ecommerce.backend.app.entity.Customer;
-import com.ttcn.ecommerce.backend.app.validation.ValidUsername;
-
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,17 +17,16 @@ public class CartDTO extends AbstractDTO {
     @NotNull(message = "is required")
     private String address;
 
-    private List<CartItem> cartItems = new ArrayList<>();
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
+    private List<Long> cartItemIds = new ArrayList<>();
+
+    public List<Long> getCartItemIds() {
+        return cartItemIds;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public void setCartItemIds(List<Long> cartItemIds) {
+        this.cartItemIds = cartItemIds;
     }
-
-
     public long getCustomerId() {
         return customerId;
     }
